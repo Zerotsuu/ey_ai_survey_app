@@ -1,0 +1,42 @@
+{
+  "name": "survey-form-sharepoint",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "format:write": "prettier --write \"**/*.{js,jsx,mdx}\" --cache",
+    "format:check": "prettier --check \"**/*.{js,jsx,mdx}\" --cache",
+    "sp-build": "spfx-build",
+    "sp-package": "spfx-package"
+  },
+  "dependencies": {
+    "@microsoft/sp-lodash-subset": "^1.16.1",
+    "@microsoft/sp-webpart-base": "^1.16.1",
+    "geist": "^1.3.0",
+    "papaparse": "^5.5.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^3.23.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "postcss": "^8.4.39",
+    "prettier": "^3.3.2",
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "tailwindcss": "^3.4.3",
+    "vite": "^6.2.2"
+  },
+  "ct3aMetadata": {
+    "initVersion": "7.38.1"
+  },
+  "packageManager": "npm@10.9.0"
+}

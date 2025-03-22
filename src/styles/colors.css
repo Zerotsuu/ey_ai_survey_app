@@ -1,0 +1,38 @@
+/**
+ * Global Color Variables
+ * 
+ * This file defines CSS variables for the application's color palette.
+ * These variables are used throughout the application for consistent styling.
+ */
+
+:root {
+  /* Primary colors */
+  --color-primary: #FFCC00;
+  --color-primaryHover: #FFD633;
+  --color-primaryActive: #E6B800;
+  
+  /* Secondary colors */
+  --color-secondary: #000000;
+  --color-secondaryHover: #333333;
+  --color-secondaryActive: #000000;
+  
+  /* Background colors */
+  --color-background: #FFFFFF;
+  --color-backgroundAlt: #F5F5F5;
+  
+  /* Text colors */
+  --color-textPrimary: #000000;
+  --color-textSecondary: #666666;
+  --color-textLight: #FFFFFF;
+  
+  /* Status colors */
+  --color-success: #4CAF50;
+  --color-error: #F44336;
+  --color-warning: #FF9800;
+  --color-info: #2196F3;
+  
+  /* UI element colors */
+  --color-border: #E0E0E0;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --color-overlay: rgba(0, 0, 0, 0.5);
+} 

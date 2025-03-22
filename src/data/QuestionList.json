@@ -1,0 +1,426 @@
+[
+  {
+    "Code": "s1_q1",
+    "Dimension": "Strategy & Innovation",
+    "Question": "Our organization has a clear understanding of the various business impacts/benefits to GenAI applications on our organization and the whole value chain/ecosystem",
+    "HelpText1": "Description question mean under the strategy framework for Q1",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q1"
+  },
+  {
+    "Code": "s1_q2",
+    "Dimension": "Strategy & Innovation",
+    "Question": "Our organizations GenAI-driven business models act as significant growth drivers and/or driving efficiency and reducing costs",
+    "HelpText1": "Description question mean under the strategy framework for Q2",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q2"
+  },
+  {
+    "Code": "s1_q3",
+    "Dimension": "Strategy & Innovation",
+    "Question": "GenAI insights guide strategic market expansion and contribute to growth drivers like new products, pricing optimization, channel expansion/penetration, increased sell-through to same customers, etc.",
+    "HelpText1": "Description question mean under the strategy framework for Q3",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q3"
+  },
+  {
+    "Code": "s1_q4",
+    "Dimension": "Strategy & Innovation",
+    "Question": "Deployed artificial intelligence (AI)-driven tools help generate business intelligence as organization starts to harness full potential of data-dependent capabilities",
+    "HelpText1": "Description question mean under the strategy framework for Q4",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q4"
+  },
+  {
+    "Code": "s1_q5",
+    "Dimension": "Strategy & Innovation",
+    "Question": "Our organization makes continual investments in GenAI talent and provides access to training and development to help employees pivot and gain the necessary skill sets to work with GenAI",
+    "HelpText1": "Description question mean under the strategy framework for Q5",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q5"
+  },
+  {
+    "Code": "s1_q6",
+    "Dimension": "Strategy & Innovation",
+    "Question": "Investment in GenAI is a distinct and well defined part of overall capital allocation for our organization as GenAI-driven business models become major growth drivers",
+    "HelpText1": "Description question mean under the strategy framework for Q6",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q6"
+  },
+  {
+    "Code": "s1_q7",
+    "Dimension": "Strategy & Innovation",
+    "Question": "Our organization views GenAI investments as a strategic enabler of growth rather than a cost, reflecting a proactive approach to competition and industry trends",
+    "HelpText1": "Description question mean under the strategy framework for Q7",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q7"
+  },
+  {
+    "Code": "s1_q8",
+    "Dimension": "Strategy & Innovation",
+    "Question": "Our organization is exploring strategic partnerships or potential acquisitions to enhance our GenAI capabilities",
+    "HelpText1": "Description question mean under the strategy framework for Q8",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q8"
+  },
+  {
+    "Code": "s1_q9",
+    "Dimension": "Strategy & Innovation",
+    "Question": "Our organization has formal functions such as an internal center of excellence focused on testing and implementing latest tech (e.g., dedicated program to pilot new initiatives)",
+    "HelpText1": "Description question mean under the strategy framework for Q9",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q9"
+  },
+  {
+    "Code": "s1_q10",
+    "Dimension": "Strategy & Innovation",
+    "Question": "Our organization promotes and encourages innovation with specific KPIs linked to new product/service innovation throughout our organization",
+    "HelpText1": "Description question mean under the strategy framework for Q10",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q10"
+  },
+  {
+    "Code": "s1_q11",
+    "Dimension": "Strategy & Innovation",
+    "Question": "Our organization has established partnerships to collectively support advanced GenAI research and product development",
+    "HelpText1": "Description question mean under the strategy framework for Q11",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q11"
+  },
+  {
+    "Code": "s2_q1",
+    "Dimension": "Customer Experience",
+    "Question": "Our organization leverages GenAI to provide customized solutions for clients based on their behavior and persona, in order to provide a seamless customer experience",
+    "HelpText1": "Description question mean under the customer framework for Q1",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q1"
+  },
+  {
+    "Code": "s2_q2",
+    "Dimension": "Customer Experience",
+    "Question": "Our organization gathers insights from GenAI proof-of-concept initiatives and integrates them across all business units, helping drive business decisions and customer experience",
+    "HelpText1": "Description question mean under the customer framework for Q2",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q2"
+  },
+  {
+    "Code": "s2_q3",
+    "Dimension": "Customer Experience",
+    "Question": "Integrating and scaling GenAI into the customer journey (from awareness to consideration to the decision to transact), has resulted in a measurable and sustainable increase in sales and/or profitability",
+    "HelpText1": "Description question mean under the customer framework for Q3",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q3"
+  },
+  {
+    "Code": "s2_q4",
+    "Dimension": "Customer Experience",
+    "Question": "One or more GenAI use cases have been integrated and scaled across all business units within our organization, with a primary focus on enhancing customer experience while concurrently boosting efficiency and/or optimizing costs",
+    "HelpText1": "Description question mean under the customer framework for Q4",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q4"
+  },
+  {
+    "Code": "s2_q5",
+    "Dimension": "Customer Experience",
+    "Question": "Our organization is thinking about GenAIs potential across its entire value chain to enhance the customer experience and facilitate the adoption and scaling for GenAI solutions for increased efficiency and productivity within its ecosystem (including suppliers, customers, government etc.)",
+    "HelpText1": "Description question mean under the customer framework for Q5",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q5"
+  },
+  {
+    "Code": "s3_q1",
+    "Dimension": "Organization & People",
+    "Question": "Our organization has incorporated GenAI impacts effectively into its workforce strategy to address talent needs",
+    "HelpText1": "Description question mean under the organization framework for Q1",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q1"
+  },
+  {
+    "Code": "s3_q2",
+    "Dimension": "Organization & People",
+    "Question": "Our organizations performance metrics and KPIs are aligned with the evolved accountabilities resulting from GenAI integration",
+    "HelpText1": "Description question mean under the organization framework for Q2",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q2"
+  },
+  {
+    "Code": "s3_q3",
+    "Dimension": "Organization & People",
+    "Question": "Our organizations culture has been examined and evolved where required to enable sustained GenAI integration with clear behavioral expectations",
+    "HelpText1": "Description question mean under the organization framework for Q3",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q3"
+  },
+  {
+    "Code": "s3_q4",
+    "Dimension": "Organization & People",
+    "Question": "Our organizations leadership effectively guides new ways of working to support GenAI integration",
+    "HelpText1": "Description question mean under the organization framework for Q4",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q4"
+  },
+  {
+    "Code": "s3_q5",
+    "Dimension": "Organization & People",
+    "Question": "Our organizations learning and development practices support the ongoing skill identification and development needed for the evolution of GenAI adoption",
+    "HelpText1": "Description question mean under the organization framework for Q5",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q5"
+  },
+  {
+    "Code": "s3_q6",
+    "Dimension": "Organization & People",
+    "Question": "Our organization has active change and stakeholder management plans in place to facilitate continuous improvement and engagement during the GenAI adoption processes",
+    "HelpText1": "Description question mean under the organization framework for Q6",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q6"
+  },
+  {
+    "Code": "s3_q7",
+    "Dimension": "Organization & People",
+    "Question": "Our organizational structure has been optimized to effectively support the integration and operationalization of GenAI, with dedicated people assigned for accountabilities and KPI targets",
+    "HelpText1": "Description question mean under the organization framework for Q7",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q7"
+  },
+  {
+    "Code": "s4_q1",
+    "Dimension": "Operations",
+    "Question": "Our organization has implemented one or more solutions of GenAI to improve operating efficiency (e.g., process bottlenecks, decision-making, cost takeout)",
+    "HelpText1": "Description question mean under the operations framework for Q1",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q1"
+  },
+  {
+    "Code": "s4_q2",
+    "Dimension": "Operations",
+    "Question": "Our organization has revamped its operating model to effectively integrate GenAI into daily operations and supply chain, and integrated GenAI capability within key enterprise systems (e.g., SCIP, TMS, APS )",
+    "HelpText1": "Description question mean under the operations framework for Q2",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q2"
+  },
+  {
+    "Code": "s4_q3",
+    "Dimension": "Operations",
+    "Question": "Our organization has implemented more than one solution of GenAI to optimize its scenario planning and decision-making (e.g., demand forecast, inventory management, production planning)",
+    "HelpText1": "Description question mean under the operations framework for Q3",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q3"
+  },
+  {
+    "Code": "s4_q4",
+    "Dimension": "Operations",
+    "Question": "Our organization has implemented more than one solution of GenAI to manage its procurement (e.g., supplier selection, evaluation and compliance, contract management, real-time analytics)",
+    "HelpText1": "Description question mean under the operations framework for Q4",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q4"
+  },
+  {
+    "Code": "s4_q5",
+    "Dimension": "Operations",
+    "Question": "Our organization has implemented more than one solution of GenAI to enhance its production (e.g., new product design/prototyping, quality control/defect detection, process optimization)",
+    "HelpText1": "Description question mean under the operations framework for Q5",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q5"
+  },
+  {
+    "Code": "s4_q6",
+    "Dimension": "Operations",
+    "Question": "Our organization has implemented more than one solution of GenAI to advance its logistics and fulfillment (e.g., route/load optimization, warehouse management, real-time tracking/traceability)",
+    "HelpText1": "Description question mean under the operations framework for Q6",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q6"
+  },
+  {
+    "Code": "s4_q7",
+    "Dimension": "Operations",
+    "Question": "Our organization has implemented more than one solution of GenAI to strengthen its enterprise asset management (predictive maintenance, lifecycle management, space/facility optimization)",
+    "HelpText1": "Description question mean under the operations framework for Q7",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q7"
+  },
+  {
+    "Code": "s5_q1",
+    "Dimension": "Cybersecurity & Risk",
+    "Question": "Our organization has considered GenAI risks around design, data, performance, technology, third party and compliance",
+    "HelpText1": "Description question mean under the risk framework for Q1",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q1"
+  },
+  {
+    "Code": "s5_q2",
+    "Dimension": "Cybersecurity & Risk",
+    "Question": "Our organization has considered integrated GenAI to proactively identify and predict potential risks in real time and considers leveraging this input in compliance, fraud/loss prevention and internal audit areas",
+    "HelpText1": "Description question mean under the risk framework for Q2",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q2"
+  },
+  {
+    "Code": "s5_q3",
+    "Dimension": "Cybersecurity & Risk",
+    "Question": "Our organization has GenAI models trained to perform continuous control monitoring",
+    "HelpText1": "Description question mean under the risk framework for Q3",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q3"
+  },
+  {
+    "Code": "s5_q4",
+    "Dimension": "Cybersecurity & Risk",
+    "Question": "Our organization is leveraging GenAI in performing risk and compliance tasks such as preparing test plans and producing audit reports",
+    "HelpText1": "Description question mean under the risk framework for Q4",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q4"
+  },
+  {
+    "Code": "s5_q5",
+    "Dimension": "Cybersecurity & Risk",
+    "Question": "Our organization has an existing cross-functional governance framework, aligned to company goals and with clarity around the decision-making process and the risks that need to be mitigated",
+    "HelpText1": "Description question mean under the risk framework for Q5",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q5"
+  },
+  {
+    "Code": "s5_q6",
+    "Dimension": "Cybersecurity & Risk",
+    "Question": "Our organization is up to date with all regulatory requirements around data and has adopted a framework to regulate GenAI activities",
+    "HelpText1": "Description question mean under the risk framework for Q6",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q6"
+  },
+  {
+    "Code": "s5_q7",
+    "Dimension": "Cybersecurity & Risk",
+    "Question": "Our organization has a process to monitor the lifecycle of all GenAI assets and established governance for the usage across all teams and functions",
+    "HelpText1": "Description question mean under the risk framework for Q7",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q7"
+  },
+  {
+    "Code": "s5_q8",
+    "Dimension": "Cybersecurity & Risk",
+    "Question": "Our organization has considered ethical concerns, and social and environmental impacts from using GenAI",
+    "HelpText1": "Description question mean under the risk framework for Q8",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q8"
+  },
+  {
+    "Code": "s5_q9",
+    "Dimension": "Cybersecurity & Risk",
+    "Question": "Our organization has set benchmarks for inclusivity and actively advocated for ethical GenAI practices industry-wide",
+    "HelpText1": "Description question mean under the risk framework for Q9",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q9"
+  },
+  {
+    "Code": "s5_q10",
+    "Dimension": "Cybersecurity & Risk",
+    "Question": "Our organization is pioneering eco-friendly GenAI design and incorporating green practices into development",
+    "HelpText1": "Description question mean under the risk framework for Q10",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q10"
+  },
+  {
+    "Code": "s5_q11",
+    "Dimension": "Cybersecurity & Risk",
+    "Question": "Our organization has set of principles (i.e., value-based norms that guide and conduct: fairness, transparency, sustainability, accountability and reliability) that outlines what trusted/responsible/ethical GenAI means for our organization",
+    "HelpText1": "Description question mean under the risk framework for Q11",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q11"
+  },
+  {
+    "Code": "s5_q12",
+    "Dimension": "Cybersecurity & Risk",
+    "Question": "Our organization has considered risks such as data privacy, copyright issues and cybersecurity associated with GenAI, and our organizations board, senior management and staff are aware of the risks posed by GenAI and know how to manage them",
+    "HelpText1": "Description question mean under the risk framework for Q12",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q12"
+  },
+  {
+    "Code": "s6_q1",
+    "Dimension": "Finance, Tax & Legal",
+    "Question": "Our organization has developed GenAI adoption guidance compatible with existing finance, tax and legal policies in place",
+    "HelpText1": "Description question mean under the finance,tax,legal framework for Q1",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q1"
+  },
+  {
+    "Code": "s6_q2",
+    "Dimension": "Finance, Tax & Legal",
+    "Question": "To stay ahead of the latest trends, our organization has assembled a team across functions under the CFO to facilitate the research and implementation efforts of GenAI to meet finance, tax and legal specialty and stay ahead of the latest trends",
+    "HelpText1": "Description question mean under the finance,tax,legal framework for Q2",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q2"
+  },
+  {
+    "Code": "s6_q3",
+    "Dimension": "Finance, Tax & Legal",
+    "Question": "Our organization has implemented more than one solution of GenAI to improve finance functions (e.g., real-time internal control and financial planning and analysis, routine financial task automation, adaptive budgeting, intelligent fraud detection)",
+    "HelpText1": "Description question mean under the finance,tax,legal framework for Q3",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q3"
+  },
+  {
+    "Code": "s6_q4",
+    "Dimension": "Finance, Tax & Legal",
+    "Question": "Our organization has implemented more than one solution of GenAI to enhance tax functions (e.g., routine tax tasks automation, tax planning and optimization, tax laws analysis)",
+    "HelpText1": "Description question mean under the finance,tax,legal framework for Q4",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q4"
+  },
+  {
+    "Code": "s6_q5",
+    "Dimension": "Finance, Tax & Legal",
+    "Question": "Our organization has implemented more than one solution of GenAI to streamline legal functions (e.g., legal document management, real-time disclosure and compliance analysis)",
+    "HelpText1": "Description question mean under the finance,tax,legal framework for Q5",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q5"
+  },
+  {
+    "Code": "s7_q1",
+    "Dimension": "Data & Technology",
+    "Question": "All of our organizations data sources are identified, collapsed to single sources of truth where redundant, and quality-controlled for accuracy, labeled and well organized",
+    "HelpText1": "Description question mean under the technology framework for Q1",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q1"
+  },
+  {
+    "Code": "s7_q2",
+    "Dimension": "Data & Technology",
+    "Question": "Our organizations data governance polices are established for privacy, compliance, security, and lineage tracking",
+    "HelpText1": "Description question mean under the technology framework for Q2",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q2"
+  },
+  {
+    "Code": "s7_q3",
+    "Dimension": "Data & Technology",
+    "Question": "Our organizations data pipelines are developed to support the ingestion, scrubbing, pre-processing, and transformation of current and new data",
+    "HelpText1": "Description question mean under the technology framework for Q3",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q3"
+  },
+  {
+    "Code": "s7_q4",
+    "Dimension": "Data & Technology",
+    "Question": "Our organization has considered infrastructure to support both local and cloud-based model deployments to serve for data classification and data latency",
+    "HelpText1": "Description question mean under the technology framework for Q4",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q4"
+  },
+  {
+    "Code": "s7_q5",
+    "Dimension": "Data & Technology",
+    "Question": "Our organization has adopted newer back-office software and hardware strategies which complement generative AI (i.e., copilot)",
+    "HelpText1": "Description question mean under the technology framework for Q5",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q5"
+  },
+  {
+    "Code": "s7_q6",
+    "Dimension": "Data & Technology",
+    "Question": "Our organization has a data warehouse strategy for supporting both structured and unstructured data at scale",
+    "HelpText1": "Description question mean under the technology framework for Q6",
+    "HelpText2": "Relevenace of this question to the org",
+    "HelpText3": "Examples for each rating (1, 2, 3, 4, 5) for Q6"
+  }
+]

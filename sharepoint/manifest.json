@@ -1,0 +1,24 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "survey-form-webpart",
+  "alias": "SurveyFormWebPart",
+  "componentType": "WebPart",
+  "version": "1.0.0",
+  "manifestVersion": 2,
+  "requiresCustomScript": false,
+  "supportedHosts": ["SharePointWebPart"],
+  "supportsThemeVariants": true,
+  "preconfiguredEntries": [{
+    "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+    "group": { "default": "Other" },
+    "title": { "default": "Survey Form" },
+    "description": { "default": "Interactive survey form component" },
+    "officeFabricIconFontName": "Survey",
+    "properties": {
+      "backgroundColor": "#2e026d",
+      "textColor": "#ffffff",
+      "showNavigation": true,
+      "allowExport": true
+    }
+  }]
+} 
