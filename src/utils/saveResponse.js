@@ -3,7 +3,7 @@
  */
 import surveyResponses from '../response/SurveyResponse.json';
 import { normalizeQuestionId } from './loadSurveyData';
-import { updateSurveyResponse, processBatchUpdates } from './BrowserCJSAdapter';
+import { updateSurveyResponse, processBatchUpdates, setEnsureNumericFieldsRef } from './BrowserCJSAdapter';
 
 // Create a mutable copy of the survey responses that we can update
 let currentSurveyResponses = [...surveyResponses];
@@ -109,8 +109,8 @@ export const registerUser = (userData) => {
     Company: userData.company || '',
     Job_Title: userData.jobTitle || '',
     Insurance_Type: userData.insuranceType || '',
-    Employee_Count: userData.employeeCount || '',
-    Annual_Revenue: userData.annualRevenue || '',
+    Employee_Count: userData.employeeCount ? parseInt(userData.employeeCount, 10) || 0 : 0,
+    Annual_Revenue: userData.annualRevenue ? parseInt(userData.annualRevenue, 10) || 0 : 0,
     Ownership_Type: userData.ownershipType || '',
     Registration_Date: new Date().toISOString().split('T')[0],
     Last_Modified_Date: new Date().toISOString().split('T')[0]
@@ -129,6 +129,45 @@ export const registerUser = (userData) => {
   
   return newUser;
 };
+
+/**
+ * Ensures numeric fields in a user object are actually stored as numbers
+ * @param {Object} userData - User data object to normalize
+ * @returns {Object} - User data with proper numeric fields
+ */
+export const ensureNumericFields = (userData) => {
+  if (!userData) return userData;
+  
+  const result = { ...userData };
+  
+  // Convert Employee_Count and Annual_Revenue to numbers
+  if ('Employee_Count' in result) {
+    result.Employee_Count = typeof result.Employee_Count === 'string' 
+      ? parseInt(result.Employee_Count, 10) || 0 
+      : (typeof result.Employee_Count === 'number' ? result.Employee_Count : 0);
+  }
+  
+  if ('Annual_Revenue' in result) {
+    result.Annual_Revenue = typeof result.Annual_Revenue === 'string'
+      ? parseInt(result.Annual_Revenue, 10) || 0
+      : (typeof result.Annual_Revenue === 'number' ? result.Annual_Revenue : 0);
+  }
+  
+  // Convert question answers (format: s1q1, s2q3, etc.) to numbers if they are numeric (1-5)
+  Object.keys(result).forEach(key => {
+    if (/^s\dq\d+$/.test(key) && !key.includes('_comment')) {
+      const value = result[key];
+      if (typeof value === 'string' && /^[1-5]$/.test(value.trim())) {
+        result[key] = parseInt(value, 10);
+      }
+    }
+  });
+  
+  return result;
+};
+
+// Set the reference to ensureNumericFields in BrowserCJSAdapter to avoid circular dependencies
+setEnsureNumericFieldsRef(ensureNumericFields);
 
 /**
  * Updates the survey response data in memory
@@ -166,8 +205,8 @@ export const saveResponseToFile = async (userData, responseData, isDraft = false
         Company: userData.company || '',
         Job_Title: userData.jobTitle || '',
         Insurance_Type: userData.insuranceType || '',
-        Employee_Count: userData.employeeCount || '',
-        Annual_Revenue: userData.annualRevenue || '',
+        Employee_Count: userData.employeeCount ? parseInt(userData.employeeCount, 10) || 0 : 0,
+        Annual_Revenue: userData.annualRevenue ? parseInt(userData.annualRevenue, 10) || 0 : 0,
         Ownership_Type: userData.ownershipType || '',
         Registration_Date: new Date().toISOString().split('T')[0],
         Last_Modified_Date: new Date().toISOString().split('T')[0]
@@ -226,8 +265,11 @@ export const saveResponseToFile = async (userData, responseData, isDraft = false
       Last_Modified_Date: new Date().toISOString().split('T')[0] // Add today's date as YYYY-MM-DD
     };
     
+    // Ensure numeric fields are properly stored as numbers
+    const normalizedUser = ensureNumericFields(updatedUser);
+    
     // Update the user in the current survey responses
-    currentSurveyResponses[userIndex] = updatedUser;
+    currentSurveyResponses[userIndex] = normalizedUser;
     
     // Update localStorage to indicate the user has responses
     if (userData && !userData.hasResponses) {
@@ -274,7 +316,7 @@ export const saveResponseToFile = async (userData, responseData, isDraft = false
         // We don't want to fail the whole operation if just the CJS part fails
       }
     } else {
-      console.log('No answers to save via CJS adapter, skipping update');
+      // console.log('No answers to save via CJS adapter, skipping update');
     }
     
     // Apply any external batch updates if they exist
@@ -301,7 +343,7 @@ export const saveResponseToFile = async (userData, responseData, isDraft = false
         : 'Survey submitted successfully.' 
     };
   } catch (error) {
-    console.error('Error updating survey response:', error);
+    // console.error('Error updating survey response:', error);
     return { 
       success: false, 
       message: 'An error occurred while saving your responses. Please try again.' 
@@ -379,6 +421,19 @@ export const updateSpecificResponses = async (email, updates) => {
           updatedFields[key] = value;
         }
       }
+      // Handle Employee_Count and Annual_Revenue fields
+      else if (key === 'Employee_Count' || key === 'Annual_Revenue') {
+        console.log(`Updating ${key}: ${value}`);
+        
+        // Convert to number with typesafety
+        if (typeof value === 'string') {
+          updatedFields[key] = parseInt(value, 10) || 0;
+        } else if (typeof value === 'number') {
+          updatedFields[key] = value;
+        } else {
+          updatedFields[key] = 0;
+        }
+      }
     });
     
     // Update the user's survey responses
@@ -388,8 +443,11 @@ export const updateSpecificResponses = async (email, updates) => {
       Last_Modified_Date: new Date().toISOString().split('T')[0] // Update modification date
     };
     
+    // Ensure numeric fields are properly stored as numbers
+    const normalizedUser = ensureNumericFields(updatedUser);
+    
     // Apply the updates
-    currentResponses[userIndex] = updatedUser;
+    currentResponses[userIndex] = normalizedUser;
     
     // Save the updated responses
     try {

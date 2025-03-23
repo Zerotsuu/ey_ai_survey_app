@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { colorVars } from '../../styles/colors';
 import { registerUser } from '../../utils/saveResponse';
 import { validateEmail } from '../../utils/emailValidator';
+import { executeCJSScript } from '../../utils/executeScript';
 
 export default function Register({ onRegister, onSwitchToLogin }) {
   const [firstName, setFirstName] = useState('');
@@ -128,6 +129,37 @@ export default function Register({ onRegister, onSwitchToLogin }) {
       
       if (!newUser) {
         throw new Error('Failed to register user');
+      }
+      
+      // ==================>>>>>> CREATE AN UPDATE OBJECT FOR THE CJS SCRIPT <<<<<=================
+      // Basically we're creating an object with the same keys as the updates object
+      // but with the values as the new values for the user
+      const updates = {
+        First_Name: firstName,
+        Last_Name: lastName,
+        Company: company,
+        Job_Title: jobTitle,
+        Insurance_Type: insuranceType,
+        Employee_Count: employeeCount ? parseInt(employeeCount, 10) || 0 : 0,
+        Annual_Revenue: annualRevenue ? parseInt(annualRevenue, 10) || 0 : 0,
+        Ownership_Type: ownershipType || '',
+      };
+      
+      // Execute the CJS script to update the JSON file
+      try {
+        const cjsResult = await executeCJSScript(email, updates);
+        console.log('CJS script execution result:', cjsResult);
+        
+        if (cjsResult.success) {
+          // JSON file update was successful
+          setError(''); // Clear any error message
+        } else {
+          // JSON file update failed but we'll continue anyway
+          console.warn('Failed to update JSON file directly, but registration will continue');
+        }
+      } catch (cjsError) {
+        console.error('Error executing CJS script:', cjsError);
+        // Continue with registration even if CJS script fails
       }
       
       // Call the onRegister callback with the user information

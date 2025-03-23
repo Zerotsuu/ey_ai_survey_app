@@ -40,43 +40,62 @@ function updateSurveyResponse(email, updates) {
       (item) => item.Business_Email?.toLowerCase() === email.toLowerCase()
     );
     
+    let user;
+    let newUser = false;
+    
     if (userIndex === -1) {
-      console.error(`No user found with email: ${email}`);
-      return false;
+      // User doesn't exist, create a new user entry
+      console.log(`Creating new user with email: ${email}`);
+      
+      // Create a new user object with the provided updates
+      user = {
+        Business_Email: email,
+        Registration_Date: new Date().toISOString().split('T')[0],
+        Last_Modified_Date: new Date().toISOString().split('T')[0]
+      };
+      
+      // Add the new user to the data array
+      data.push(user);
+      newUser = true;
+    } else {
+      // Get the existing user object
+      user = data[userIndex];
+      console.log(`Found user: ${user.First_Name || ''} ${user.Last_Name || ''}`);
     }
     
-    // Get the user object
-    const user = data[userIndex];
-    console.log(`Found user: ${user.First_Name} ${user.Last_Name}`);
-    
-    // Process the updates
-    const updatedFields = {};
+    // Apply all updates to the user object
     let updateCount = 0;
-    
-    // Dynamically update any field in the updates object
-    Object.entries(updates).forEach(([key, value]) => {
-      // Validate the key format for question answers (s1q1) or comments (s1q1_comment)
-      if (/^s\dq\d+(_comment)?$/.test(key)) {
-        const oldValue = user[key];
+    for (const key in updates) {
+      if (Object.hasOwnProperty.call(updates, key)) {
+        let value = updates[key];
+        const oldValue = user[key] !== undefined ? user[key] : '(not set)';
         
-        // Handle number conversion for rating questions (1-5)
-        if (!key.includes('_comment') && typeof value === 'string' && /^[1-5]$/.test(value.trim())) {
-          value = parseInt(value, 10);
+        // Convert Employee_Count and Annual_Revenue to numbers
+        if (key === 'Employee_Count' || key === 'Annual_Revenue') {
+          if (typeof value === 'string') {
+            value = parseInt(value, 10) || 0;
+          } else if (typeof value !== 'number') {
+            value = 0;
+          }
+        }
+        
+        // Convert question answers (format: s1q1, s2q3, etc.) to numbers if they are numeric ratings
+        if (/^s\dq\d+$/.test(key) && !key.includes('_comment')) {
+          if (typeof value === 'string' && /^[1-5]$/.test(value.trim())) {
+            value = parseInt(value, 10);
+          }
         }
         
         // Update the field
         user[key] = value;
-        updatedFields[key] = value;
         updateCount++;
         
         console.log(`Updated ${key}: ${oldValue} → ${value}`);
-      } else {
-        console.warn(`Skipping invalid key format: ${key}`);
       }
-    });
+    }
     
     if (updateCount === 0) {
-      console.warn('No valid updates were made');
+      console.warn('No updates were applied');
       return false;
     }
     
@@ -85,7 +104,13 @@ function updateSurveyResponse(email, updates) {
     
     // Write the updated data back to the file
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
-    console.log(`Successfully updated ${updateCount} fields for user ${email}`);
+    
+    if (newUser) {
+      console.log(`Successfully created new user ${email} with ${updateCount} fields`);
+    } else {
+      console.log(`Successfully updated ${updateCount} fields for user ${email}`);
+    }
+    
     console.log(`Changes saved to ${filePath}`);
     
     return true;

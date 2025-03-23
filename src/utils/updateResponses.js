@@ -27,7 +27,7 @@ import { updateSurveyResponse, processBatchUpdates, parseBatchUpdates } from './
  */
 export const updateUserResponses = async (email, updates) => {
   if (!email || !updates || typeof updates !== 'object') {
-    console.error('Invalid parameters for updateUserResponses');
+    // console.error('Invalid parameters for updateUserResponses');
     return { success: false, message: 'Invalid parameters' };
   }
   

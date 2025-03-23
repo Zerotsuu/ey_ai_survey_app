@@ -35,7 +35,7 @@ Promise.all([executeCJSPromise, executeBatchCJSPromise]).then(([executeCJSModule
   app.post('/api/execute-cjs', executeCJS);
   app.post('/api/execute-batch-cjs', executeBatchCJS);
 
-  console.log('API routes configured');
+  // console.log('API routes configured');
 });
 
 // Health check endpoint
@@ -58,6 +58,6 @@ const PORT = process.env.API_PORT || 3001;
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`API server listening on port ${PORT}`);
+  // console.log(`API server listening on port ${PORT}`);
   console.log(`CJS integration endpoints available at http://localhost:${PORT}/api/execute-cjs and http://localhost:${PORT}/api/execute-batch-cjs`);
 }); 

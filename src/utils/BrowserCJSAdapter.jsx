@@ -9,6 +9,15 @@
 import { normalizeQuestionId } from './loadSurveyData';
 import { getSurveyResponses } from './saveResponse';
 
+// Import the ensureNumericFields utility
+// Using a function reference that will be set after circular dependencies are resolved
+let ensureNumericFields = null;
+
+// Set the ensureNumericFields reference - called from saveResponse.js after it's loaded
+export const setEnsureNumericFieldsRef = (fn) => {
+  ensureNumericFields = fn;
+};
+
 /**
  * Updates survey responses for a specific user
  * This is a browser-compatible version of the updateSurveyResponse function
@@ -30,7 +39,7 @@ export const updateSurveyResponse = async (email, updates) => {
 
     // Handle case where updates is empty
     if (!updates || Object.keys(updates).length === 0) {
-      console.log(`No updates provided for user: ${email}`);
+      // console.log(`No updates provided for user: ${email}`);
       return { success: true, message: 'No updates provided', updatedFields: {} };
     }
 
@@ -72,6 +81,23 @@ export const updateSurveyResponse = async (email, updates) => {
         updateCount++;
         
         console.log(`Updated ${key}: ${oldValue} → ${value}`);
+      } 
+      // Handle Employee_Count and Annual_Revenue fields as numbers
+      else if (key === 'Employee_Count' || key === 'Annual_Revenue') {
+        const oldValue = user[key];
+        
+        // Convert to number with typesafety
+        if (typeof value === 'string') {
+          value = parseInt(value, 10) || 0;
+        } else if (typeof value !== 'number') {
+          value = 0;
+        }
+        
+        user[key] = value;
+        updatedFields[key] = value;
+        updateCount++;
+        
+        console.log(`Updated ${key}: ${oldValue} → ${value}`);
       } else {
         console.warn(`Skipping invalid key format: ${key}`);
       }
@@ -84,6 +110,11 @@ export const updateSurveyResponse = async (email, updates) => {
     
     // Update the last modified date
     user.Last_Modified_Date = new Date().toISOString().split('T')[0];
+    
+    // Ensure numeric fields are properly stored as numbers (if available)
+    if (typeof ensureNumericFields === 'function') {
+      user = ensureNumericFields(user);
+    }
     
     // Update the user in the data array
     data[userIndex] = user;
@@ -199,32 +230,32 @@ export const parseBatchUpdates = (jsonString) => {
     
     // Validate the structure
     if (typeof parsed !== 'object' || parsed === null) {
-      console.error('Invalid batch update format: not an object');
+      // console.error('Invalid batch update format: not an object');
       return null;
     }
     
     // Check if at least one email key exists
     if (Object.keys(parsed).length === 0) {
-      console.error('Invalid batch update format: empty object');
+      // console.error('Invalid batch update format: empty object');
       return null;
     }
     
     // Validate each entry
     for (const [email, updates] of Object.entries(parsed)) {
       if (typeof updates !== 'object' || updates === null) {
-        console.error(`Invalid updates for ${email}: not an object`);
+        // console.error(`Invalid updates for ${email}: not an object`);
         return null;
       }
       
       if (Object.keys(updates).length === 0) {
-        console.error(`Invalid updates for ${email}: empty object`);
+        // console.error(`Invalid updates for ${email}: empty object`);
         return null;
       }
     }
     
     return parsed;
   } catch (error) {
-    console.error('Error parsing JSON:', error);
+    // console.error('Error parsing JSON:', error);
     return null;
   }
 }; 

@@ -60,7 +60,7 @@ export default async (req, res) => {
       try {
         fs.unlinkSync(tempFilePath);
       } catch (unlinkError) {
-        console.error('Error removing temp file:', unlinkError);
+        // console.error('Error removing temp file:', unlinkError);
       }
       
       if (error) {
