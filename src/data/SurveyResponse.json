@@ -120,7 +120,7 @@
     "Industry_Category": "BC",
     "Employee_Count": 500,
     "Annual_Revenue": 5000000,
-    "s1q1": 3,
+    "s1q1": 2,
     "s1q1_comment": "What the fuck is this question"
   },
   {
@@ -143,6 +143,17 @@
     "Industry": "Strategy and Transaction",
     "Industry_Category": "TCF",
     "Employee_Count": 50,
+    "Annual_Revenue": 10000000
+  },
+  {
+    "Business_Email": "john.doe@example.com",
+    "First_Name": "John",
+    "Last_Name": "Doe",
+    "Company": "Tech Solutions",
+    "Job_Title": "Software Engineer",
+    "Industry": "Technology",
+    "Industry_Category": "Software Development",
+    "Employee_Count": 200,
     "Annual_Revenue": 10000000
   }
 ]
