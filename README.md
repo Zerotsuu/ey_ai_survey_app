@@ -35,6 +35,83 @@ survey-form-sharepoint/
 ├── tailwind.config.js         # Tailwind CSS configuration
 └── sharepoint.config.js       # SharePoint configuration
 ```
+
+## Optimized Project Structure
+
+The project has been reorganized to improve maintainability, separation of concerns, and code reuse. Here's an overview of the new structure:
+
+```
+src/
+├── assets/                # Static assets like images, icons
+├── components/            # Reusable UI components
+│   ├── common/            # Generic components used across the app
+│   │   ├── Button.jsx
+│   │   ├── Tooltip.jsx
+│   │   └── ...
+│   ├── layout/            # Layout components
+│   │   ├── TopNavigation.jsx
+│   │   ├── SideNavigation.jsx
+│   │   └── ...
+│   └── survey/            # Survey-specific components
+│       ├── DonutChart.jsx
+│       ├── QuestionRow.jsx
+│       ├── RadioGroup.jsx
+│       └── ...
+├── context/               # React context providers
+│   ├── AuthContext.jsx    # Authentication context
+│   └── SurveyContext.jsx  # Survey state management context
+├── data/                  # Static data files and schemas
+│   └── QuestionList.json
+├── hooks/                 # Custom React hooks
+│   ├── useAuth.js         # Authentication hook
+│   ├── useSurveyForm.js   # Survey form state management
+│   └── ...
+├── pages/                 # Page components
+│   ├── AuthPage.jsx       # Login/authentication page
+│   ├── SurveyPage.jsx     # Main survey page
+│   ├── ResultsPage.jsx    # View responses page
+│   └── ...
+├── services/              # API and external service integrations
+│   ├── api.js             # Base API configuration
+│   ├── authService.js     # Authentication service
+│   └── surveyService.js   # Survey data service
+├── styles/                # Global styles and theme
+│   ├── colors.js
+│   └── global.css
+├── utils/                 # Utility functions
+│   ├── validators.js      # Form validation utilities
+│   ├── formatters.js      # Data formatting utilities
+│   └── ...
+├── App.jsx                # Root App component (simplified)
+└── main.jsx               # Entry point
+```
+
+### Key Improvements:
+
+1. **Separation of Concerns**:
+   - Moved business logic from App.jsx into appropriate context providers and hooks
+   - Separated UI components from data management
+
+2. **Code Organization**:
+   - Components grouped by function (common, layout, survey)
+   - Created a proper pages directory for top-level route components
+   - Services directory for external API interactions
+
+3. **State Management**:
+   - Created context providers to make state available throughout the app
+   - Reduced prop drilling by using context where appropriate
+
+4. **Maintainability**:
+   - Smaller, focused components with single responsibilities
+   - Consistent naming conventions
+   - Clear organization of files by function
+
+5. **Performance**:
+   - Optimized rendering with proper component splitting
+   - Improved state management to reduce unnecessary re-renders
+
+This restructuring will make the codebase more maintainable, easier to navigate, and create clearer boundaries between different parts of the application.
+
 ### Prerequisites
 
 - Node.js (LTS v18).
@@ -121,4 +198,48 @@ export const sharepointConfig = {
 
 ## License
 
-This project is licensed under the MIT License. 
+This project is licensed under the MIT License.
+
+## CJS Script Integration
+
+This application now integrates with the CommonJS (CJS) script for real-time JSON file updates. When users submit surveys or save drafts, the application will update the SurveyResponse.json file directly using the CJS script.
+
+### How to Use the CJS Integration
+
+1. Install the required dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Start both the web application and the API server together:
+   ```bash
+   npm run dev
+   ```
+
+   This will start:
+   - The main web application on port 5173 (default Vite port)
+   - The API server on port 3001
+
+3. Use the application normally - the CJS script will be executed automatically when you:
+   - Submit a survey
+   - Save a draft
+
+### Manual CJS Script Execution
+
+You can also manually run the CJS script to update survey responses:
+
+```bash
+# Update a single question response
+npm run update-survey user@example.com s1q1 4
+
+# Update a question with a comment
+npm run update-survey user@example.com s1q1 4 "This is my comment"
+
+# Update just a comment
+npm run update-survey user@example.com s1q1_comment "Just updating the comment"
+
+# Run a batch update from a JSON file
+npm run update-survey -- --batch ./updates.json
+```
+
+For more details on the CJS script integration, see `src/utils/README_CJS_INTEGRATION.md`. 

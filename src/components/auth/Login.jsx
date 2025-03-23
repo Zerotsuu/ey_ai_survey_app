@@ -1,19 +1,20 @@
 /**
  * Login Component
  * 
- * This component renders a login form with email and password fields.
- * It includes form validation and handles authentication.
+ * This component renders a login form with email field only.
+ * It validates the email against a list of authorized emails in the JSON file.
  * 
  * @param {Function} onLogin - Callback function when login is successful
  * @param {Function} onSwitchToRegister - Callback to switch to registration view
  */
 import { useState } from 'react';
 import { colorVars } from '../../styles/colors';
+import { validateEmail, getUserInfo, hasExistingResponses } from '../../utils/emailValidator';
 
 export default function Login({ onLogin, onSwitchToRegister }) {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [warning, setWarning] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   // Define styles using color variables
@@ -33,6 +34,10 @@ export default function Login({ onLogin, onSwitchToRegister }) {
       backgroundColor: colorVars.error + '20', // 20% opacity
       color: colorVars.error,
     },
+    warningContainer: {
+      backgroundColor: colorVars.warning + '20', // 20% opacity
+      color: colorVars.warning || '#f59e0b', // Fallback amber color
+    },
     label: {
       color: colorVars.textPrimary,
     },
@@ -43,18 +48,6 @@ export default function Login({ onLogin, onSwitchToRegister }) {
     inputFocus: {
       borderColor: colorVars.primary,
       boxShadow: `0 0 0 1px ${colorVars.primary}`,
-    },
-    checkbox: {
-      color: colorVars.primary,
-    },
-    checkboxLabel: {
-      color: colorVars.textSecondary,
-    },
-    forgotPassword: {
-      color: colorVars.primary,
-    },
-    forgotPasswordHover: {
-      color: colorVars.primaryHover,
     },
     submitButton: {
       backgroundColor: colorVars.primary,
@@ -77,9 +70,13 @@ export default function Login({ onLogin, onSwitchToRegister }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Reset messages
+    setError('');
+    setWarning('');
+    
     // Basic validation
-    if (!email || !password) {
-      setError('Please fill in all fields');
+    if (!email) {
+      setError('Please enter your email address');
       return;
     }
     
@@ -90,16 +87,36 @@ export default function Login({ onLogin, onSwitchToRegister }) {
       return;
     }
     
-    setError('');
     setIsLoading(true);
     
     try {
-      // In a real app, you would call an API here
-      // For this demo, we'll simulate a successful login after a short delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Check if email exists in the survey data
+      const userData = validateEmail(email);
+      
+      if (!userData) {
+        setError('Email not found. Please check your email or contact the survey administrator.');
+        setIsLoading(false);
+        return;
+      }
+      
+      // Get full user info
+      const userInfo = getUserInfo(email);
+      
+      // Check if the user has already completed the survey
+      if (userInfo.hasResponses) {
+        setWarning('You have already submitted responses to this survey. Continuing will allow you to update your previous responses.');
+      }
+      
+      // Show a message about insurance type if it exists
+      if (userInfo.insuranceType) {
+        setWarning(prev => {
+          const insuranceMessage = `Insurance Type: ${userInfo.insuranceType}`;
+          return prev ? `${prev}\n${insuranceMessage}` : insuranceMessage;
+        });
+      }
       
       // Call the onLogin callback with the user information
-      onLogin({ email });
+      onLogin(userInfo);
     } catch (err) {
       setError('Login failed. Please try again.');
     } finally {
@@ -110,13 +127,19 @@ export default function Login({ onLogin, onSwitchToRegister }) {
   return (
     <div className="w-full max-w-md p-8 space-y-8 rounded-lg shadow-md" style={styles.container}>
       <div className="text-center">
-        <h1 className="text-2xl font-bold" style={styles.title}>Welcome Back</h1>
-        <p className="mt-2" style={styles.subtitle}>Sign in to access your survey</p>
+        <h1 className="text-2xl font-bold" style={styles.title}>Survey Access</h1>
+        <p className="mt-2" style={styles.subtitle}>Enter your email to access the survey</p>
       </div>
       
       {error && (
         <div className="p-3 text-sm rounded-md" style={styles.errorContainer}>
           {error}
+        </div>
+      )}
+      
+      {warning && (
+        <div className="p-3 text-sm rounded-md" style={styles.warningContainer}>
+          {warning}
         </div>
       )}
       
@@ -147,58 +170,6 @@ export default function Login({ onLogin, onSwitchToRegister }) {
         </div>
         
         <div>
-          <label htmlFor="password" className="block text-sm font-medium" style={styles.label}>
-            Password
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            required
-            className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none"
-            style={styles.input}
-            onFocus={(e) => {
-              e.target.style.borderColor = styles.inputFocus.borderColor;
-              e.target.style.boxShadow = styles.inputFocus.boxShadow;
-            }}
-            onBlur={(e) => {
-              e.target.style.borderColor = styles.input.borderColor;
-              e.target.style.boxShadow = 'none';
-            }}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <input
-              id="remember-me"
-              name="remember-me"
-              type="checkbox"
-              className="w-4 h-4 rounded"
-              style={styles.checkbox}
-            />
-            <label htmlFor="remember-me" className="block ml-2 text-sm" style={styles.checkboxLabel}>
-              Remember me
-            </label>
-          </div>
-          
-          <div className="text-sm">
-            <a 
-              href="#" 
-              className="font-medium"
-              style={styles.forgotPassword}
-              onMouseOver={(e) => e.target.style.color = styles.forgotPasswordHover.color}
-              onMouseOut={(e) => e.target.style.color = styles.forgotPassword.color}
-            >
-              Forgot your password?
-            </a>
-          </div>
-        </div>
-        
-        <div>
           <button
             type="submit"
             disabled={isLoading}
@@ -211,7 +182,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
               e.target.style.backgroundColor = styles.submitButton.backgroundColor;
             }}
           >
-            {isLoading ? 'Signing in...' : 'Sign in'}
+            {isLoading ? 'Verifying...' : 'Access Survey'}
           </button>
         </div>
       </form>
@@ -227,7 +198,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
             onMouseOver={(e) => e.target.style.color = styles.registerLinkHover.color}
             onMouseOut={(e) => e.target.style.color = styles.registerLink.color}
           >
-            Register now
+            Register
           </button>
         </p>
       </div>

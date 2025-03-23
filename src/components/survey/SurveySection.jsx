@@ -10,15 +10,77 @@
  * @param {Array} questions - Array of question objects for this section
  * @param {Function} onHelpClick - Callback function when help icon is clicked
  * @param {Function} onRadioChange - Callback function when a radio button is changed
+ * @param {Object} answers - Current answers to display
+ * @param {Function} onCommentChange - Callback function when a comment is changed
+ * @param {Function} getComment - Function to get comment for a specific question
+ * @param {Function} normalizeQuestionId - Function to normalize question IDs
  */
 import QuestionRow from './QuestionRow';
 import QuestionMark from './QuestionMark';
 import RadioGroup from './RadioGroup';
 import { colorVars } from '../../styles/colors';
 
-export default function SurveySection({ id, title, questions, onHelpClick, onRadioChange }) {
+export default function SurveySection({ 
+  id, 
+  title, 
+  questions, 
+  onHelpClick, 
+  onRadioChange, 
+  answers, 
+  onCommentChange, 
+  getComment,
+  normalizeQuestionId
+}) {
   // Likert scale options for the radio buttons (1-5 rating)
   const likertOptions = ['1', '2', '3', '4', '5'];
+
+  // Helper function to get the answer for a question
+  const getAnswerForQuestion = (questionId) => {
+    // Log which question we're looking for
+    console.log(`Getting answer for question: ${questionId}`);
+    
+    // We need to check for both formats - with underscore (s1_q1) and without (s1q1)
+    // Since the app uses s1_q1 internally, first try that
+    if (questionId in answers) {
+      const answer = answers[questionId];
+      
+      // Make sure we have a valid answer
+      if (answer !== undefined && answer !== null && answer !== "undefined") {
+        console.log(`Direct match for ${questionId}: "${answer}" (${typeof answer})`);
+        return String(answer);
+      }
+    }
+    
+    // Then try the normalized version without underscore (s1q1)
+    const normalizedId = normalizeQuestionId ? normalizeQuestionId(questionId) : questionId;
+    if (normalizedId in answers) {
+      const answer = answers[normalizedId];
+      
+      // Make sure we have a valid answer
+      if (answer !== undefined && answer !== null && answer !== "undefined") {
+        console.log(`Normalized match for ${questionId} -> ${normalizedId}: "${answer}" (${typeof answer})`);
+        return String(answer);
+      }
+    }
+    
+    // Then look for the reverse - if we have a question ID without underscore but the answers use with underscore
+    if (questionId.indexOf('_') === -1) {
+      // Try to convert s1q1 to s1_q1 format
+      const appFormat = `${questionId.substring(0, 2)}_${questionId.substring(2)}`;
+      if (appFormat in answers) {
+        const answer = answers[appFormat];
+        
+        // Make sure we have a valid answer
+        if (answer !== undefined && answer !== null && answer !== "undefined") {
+          console.log(`App format match for ${questionId} -> ${appFormat}: "${answer}" (${typeof answer})`);
+          return String(answer);
+        }
+      }
+    }
+    
+    console.log(`No valid match found for ${questionId} in answers object.`);
+    return '';
+  };
 
   /**
    * Get section-specific visual elements based on section ID
@@ -138,6 +200,9 @@ export default function SurveySection({ id, title, questions, onHelpClick, onRad
                   onHelpClick={onHelpClick}
                   onRadioChange={onRadioChange}
                   color={colorVars.primary}
+                  selectedValue={getAnswerForQuestion(question.id)}
+                  comment={getComment(question.id)}
+                  onCommentChange={onCommentChange}
                 />
               ))}
             </tbody>
@@ -162,6 +227,7 @@ export default function SurveySection({ id, title, questions, onHelpClick, onRad
                   options={likertOptions}
                   onChange={(value) => onRadioChange(question.id, value)}
                   color={colorVars.primary}
+                  selectedValue={getAnswerForQuestion(question.id)}
                 />
               </div>
               
@@ -172,6 +238,8 @@ export default function SurveySection({ id, title, questions, onHelpClick, onRad
                 className="w-full p-2 rounded text-sm border"
                 style={styles.commentField}
                 rows="2"
+                value={getComment(question.id)}
+                onChange={(e) => onCommentChange(question.id, e.target.value)}
               ></textarea>
             </div>
           ))}

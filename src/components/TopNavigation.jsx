@@ -10,18 +10,45 @@
  * @param {boolean} isSidebarOpen - Whether the sidebar is currently open on mobile
  * @param {Object} user - The currently logged in user
  * @param {Function} onLogout - Callback function for logging out
+ * @param {Function} onSaveDraft - Callback function for saving draft
+ * @param {Function} onResetSurvey - Callback function for resetting the survey
+ * @param {number} completionPercentage - The percentage of survey completion
  */
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { colorVars } from '../styles/colors';
 
-export default function TopNavigation({ isSubmitting, canSubmit, onMenuToggle, isSidebarOpen, user, onLogout }) {
+export default function TopNavigation({ 
+  isSubmitting, 
+  canSubmit, 
+  onMenuToggle, 
+  isSidebarOpen, 
+  user, 
+  onLogout,
+  onSaveDraft,
+  onResetSurvey,
+  completionPercentage = 0
+}) {
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const menuRef = useRef(null);
   
-  const handleSaveDraft = () => {
-    // Simple alert for draft saving
-    alert('Your draft has been saved');
-    console.log('Saving draft...');
-  };
+  // Add event listener to detect clicks outside the dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowUserMenu(false);
+      }
+    };
+
+    // Add the event listener when the menu is shown
+    if (showUserMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    // Clean up
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showUserMenu]);
   
   // Define styles using color variables
   const styles = {
@@ -48,6 +75,8 @@ export default function TopNavigation({ isSubmitting, canSubmit, onMenuToggle, i
     dropdownMenu: {
       backgroundColor: colorVars.background,
       boxShadow: `0 2px 10px ${colorVars.shadow}`,
+      position: 'absolute',
+      zIndex: 100
     },
     dropdownItem: {
       color: colorVars.textPrimary,
@@ -69,7 +98,17 @@ export default function TopNavigation({ isSubmitting, canSubmit, onMenuToggle, i
     submitButtonHover: {
       backgroundColor: colorVars.primaryHover,
     },
+    completionIndicator: {
+      color: colorVars.textLight,
+      fontSize: '0.875rem',
+      opacity: 0.9,
+      marginRight: '8px',
+      whiteSpace: 'nowrap'
+    }
   };
+  
+  // User info
+  const userInitial = user && user.firstName ? user.firstName.charAt(0).toUpperCase() : '?';
   
   return (
     <header className="fixed left-0 right-0 top-0 z-50 flex h-16 items-center justify-between px-4 md:px-6 shadow-lg" style={styles.header}>
@@ -98,9 +137,10 @@ export default function TopNavigation({ isSubmitting, canSubmit, onMenuToggle, i
       
       {/* Action buttons container */}
       <div className="flex items-center gap-2 md:gap-4">
+        
         {/* User profile and menu */}
         {user && (
-          <div className="relative">
+          <div className="relative" ref={menuRef}>
             <button
               className="flex items-center transition-colors"
               style={styles.userButton}
@@ -109,7 +149,7 @@ export default function TopNavigation({ isSubmitting, canSubmit, onMenuToggle, i
               onClick={() => setShowUserMenu(!showUserMenu)}
             >
               <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold mr-2" style={styles.userAvatar}>
-                {user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
+                {userInitial}
               </div>
               <span className="hidden md:block">{user.name || user.email}</span>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -119,9 +159,24 @@ export default function TopNavigation({ isSubmitting, canSubmit, onMenuToggle, i
             
             {/* Dropdown menu */}
             {showUserMenu && (
-              <div className="absolute right-0 mt-2 w-48 rounded-md py-1 z-50" style={styles.dropdownMenu}>
+              <div className="absolute right-0 mt-2 w-48 rounded-md py-1 shadow-lg" style={styles.dropdownMenu}>
+                {/* Reset Survey option */}
                 <button
                   className="block w-full text-left px-4 py-2 text-sm transition-colors"
+                  style={styles.dropdownItem}
+                  onMouseOver={(e) => e.currentTarget.style.backgroundColor = styles.dropdownItemHover.backgroundColor}
+                  onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                  onClick={() => {
+                    setShowUserMenu(false);
+                    onResetSurvey();
+                  }}
+                >
+                  Reset Survey
+                </button>
+                
+                {/* Logout option */}
+                <button
+                  className="block w-full text-left px-4 py-2 text-sm transition-colors border-t border-gray-200"
                   style={styles.dropdownItem}
                   onMouseOver={(e) => e.currentTarget.style.backgroundColor = styles.dropdownItemHover.backgroundColor}
                   onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
@@ -141,7 +196,7 @@ export default function TopNavigation({ isSubmitting, canSubmit, onMenuToggle, i
           style={styles.saveDraftButton}
           onMouseOver={(e) => e.currentTarget.style.backgroundColor = styles.saveDraftButtonHover.backgroundColor}
           onMouseOut={(e) => e.currentTarget.style.backgroundColor = styles.saveDraftButton.backgroundColor}
-          onClick={handleSaveDraft}
+          onClick={onSaveDraft}
           disabled={isSubmitting} // Disable when form is submitting
         >
           Save Draft

@@ -8,12 +8,23 @@
  * @param {Function} onHelpClick - Callback function when help icon is clicked
  * @param {Function} onRadioChange - Callback function when a radio button is changed
  * @param {string} color - CSS color value for the radio buttons
+ * @param {string} selectedValue - Currently selected value for this question
+ * @param {string} comment - Current comment for this question
+ * @param {Function} onCommentChange - Callback function when a comment is changed
  */
 import RadioGroup from './RadioGroup';
 import QuestionMark from './QuestionMark';
 import { colorVars } from '../../styles/colors';
 
-export default function QuestionRow({ question, onHelpClick, onRadioChange, color }) {
+export default function QuestionRow({ 
+  question, 
+  onHelpClick, 
+  onRadioChange, 
+  color,
+  selectedValue,
+  comment,
+  onCommentChange
+}) {
   // Likert scale options (1-5)
   const options = ['1', '2', '3', '4', '5'];
   
@@ -54,6 +65,7 @@ export default function QuestionRow({ question, onHelpClick, onRadioChange, colo
           options={options}
           onChange={(value) => onRadioChange(question.id, value)}
           color={color}
+          selectedValue={selectedValue}
         />
       </td>
       
@@ -64,6 +76,8 @@ export default function QuestionRow({ question, onHelpClick, onRadioChange, colo
           className="h-10 w-full rounded p-2 text-sm resize-none border"
           style={styles.commentField}
           placeholder="Optional comments"
+          value={comment || ''}
+          onChange={(e) => onCommentChange(question.id, e.target.value)}
         />
       </td>
     </tr>

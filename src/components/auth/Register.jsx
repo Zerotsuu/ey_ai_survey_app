@@ -9,12 +9,20 @@
  */
 import { useState } from 'react';
 import { colorVars } from '../../styles/colors';
+import { registerUser } from '../../utils/saveResponse';
+import { validateEmail } from '../../utils/emailValidator';
 
 export default function Register({ onRegister, onSwitchToLogin }) {
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [company, setCompany] = useState('');
+  const [jobTitle, setJobTitle] = useState('');
+  const [industry, setIndustry] = useState('');
+  const [insuranceType, setInsuranceType] = useState('');
+  const [employeeCount, setEmployeeCount] = useState('');
+  const [annualRevenue, setAnnualRevenue] = useState('');
+  const [ownershipType, setOwnershipType] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,15 +54,21 @@ export default function Register({ onRegister, onSwitchToLogin }) {
       borderColor: colorVars.primary,
       boxShadow: `0 0 0 1px ${colorVars.primary}`,
     },
-    helperText: {
-      color: colorVars.textSecondary,
+    select: {
+      borderColor: colorVars.border,
+      color: colorVars.textPrimary,
+      backgroundColor: colorVars.background,
+    },
+    selectFocus: {
+      borderColor: colorVars.primary,
+      boxShadow: `0 0 0 1px ${colorVars.primary}`,
     },
     submitButton: {
       backgroundColor: colorVars.primary,
-      color: colorVars.textPrimary,
+      color: colorVars.buttonText,
     },
     submitButtonHover: {
-      backgroundColor: colorVars.primaryHover,
+      backgroundColor: colorVars.primaryDark,
     },
     loginText: {
       color: colorVars.textSecondary,
@@ -63,7 +77,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
       color: colorVars.primary,
     },
     loginLinkHover: {
-      color: colorVars.primaryHover,
+      color: colorVars.primaryDark,
     },
   };
 
@@ -71,8 +85,8 @@ export default function Register({ onRegister, onSwitchToLogin }) {
     e.preventDefault();
     
     // Basic validation
-    if (!name || !email || !password || !confirmPassword) {
-      setError('Please fill in all fields');
+    if (!firstName || !lastName || !email || !company || !jobTitle || !insuranceType) {
+      setError('Please fill in all required fields');
       return;
     }
     
@@ -83,29 +97,43 @@ export default function Register({ onRegister, onSwitchToLogin }) {
       return;
     }
     
-    // Password validation
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters long');
-      return;
-    }
-    
-    // Password confirmation
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-    
     setError('');
     setIsLoading(true);
     
     try {
-      // In a real app, you would call an API here
-      // For this demo, we'll simulate a successful registration after a short delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Create a user object with the registration data
+      const userData = {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        company: company,
+        jobTitle: jobTitle,
+        insuranceType: insuranceType,
+        employeeCount: employeeCount,
+        annualRevenue: annualRevenue,
+        ownershipType: ownershipType,
+        hasResponses: false
+      };
+      
+      // Check if the user already exists
+      const existingUser = validateEmail(email, false);
+      if (existingUser) {
+        setError('This email is already registered. Please login instead.');
+        setIsLoading(false);
+        return;
+      }
+      
+      // Register the new user in the survey responses system
+      const newUser = registerUser(userData);
+      
+      if (!newUser) {
+        throw new Error('Failed to register user');
+      }
       
       // Call the onRegister callback with the user information
-      onRegister({ name, email });
+      onRegister(userData);
     } catch (err) {
+      console.error('Registration error:', err);
       setError('Registration failed. Please try again.');
     } finally {
       setIsLoading(false);
@@ -126,17 +154,15 @@ export default function Register({ onRegister, onSwitchToLogin }) {
       )}
       
       <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium" style={styles.label}>
-            Full Name
-          </label>
+        <div className="flex flex-row space-x-4">
           <input
-            id="name"
-            name="name"
+            id="Fname"
+            placeholder='First Name'
+            name="firstName"
             type="text"
-            autoComplete="name"
+            autoComplete="given-name"
             required
-            className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none"
+            className="flex w-full h-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none"
             style={styles.input}
             onFocus={(e) => {
               e.target.style.borderColor = styles.inputFocus.borderColor;
@@ -146,22 +172,41 @@ export default function Register({ onRegister, onSwitchToLogin }) {
               e.target.style.borderColor = styles.input.borderColor;
               e.target.style.boxShadow = 'none';
             }}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+
+          <input
+            id="Lname"
+            placeholder='Last Name'
+            name="lastName"
+            type="text"
+            autoComplete="family-name"
+            required
+            className="flex w-full h-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none"
+            style={styles.input}
+            onFocus={(e) => {
+              e.target.style.borderColor = styles.inputFocus.borderColor;
+              e.target.style.boxShadow = styles.inputFocus.boxShadow;
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = styles.input.borderColor;
+              e.target.style.boxShadow = 'none';
+            }}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium" style={styles.label}>
-            Email Address
-          </label>
+        <div className='space-y-4'>
           <input
             id="email"
+            placeholder='Email'
             name="email"
             type="email"
             autoComplete="email"
             required
-            className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none"
+            className="flex w-full h-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none"
             style={styles.input}
             onFocus={(e) => {
               e.target.style.borderColor = styles.inputFocus.borderColor;
@@ -174,17 +219,12 @@ export default function Register({ onRegister, onSwitchToLogin }) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-        </div>
-        
-        <div>
-          <label htmlFor="password" className="block text-sm font-medium" style={styles.label}>
-            Password
-          </label>
           <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="new-password"
+            id="Company"
+            placeholder='Company'
+            name="company"
+            type="Company"
+            autoComplete="Company"
             required
             className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none"
             style={styles.input}
@@ -196,23 +236,15 @@ export default function Register({ onRegister, onSwitchToLogin }) {
               e.target.style.borderColor = styles.input.borderColor;
               e.target.style.boxShadow = 'none';
             }}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
           />
-          <p className="mt-1 text-xs" style={styles.helperText}>
-            Password must be at least 8 characters long
-          </p>
-        </div>
-        
-        <div>
-          <label htmlFor="confirm-password" className="block text-sm font-medium" style={styles.label}>
-            Confirm Password
-          </label>
           <input
-            id="confirm-password"
-            name="confirm-password"
-            type="password"
-            autoComplete="new-password"
+            id="JobTitle"
+            placeholder='Job Title'
+            name="jobTitle"
+            type="JobTitle"
+            autoComplete="JobTitle"
             required
             className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none"
             style={styles.input}
@@ -224,8 +256,102 @@ export default function Register({ onRegister, onSwitchToLogin }) {
               e.target.style.borderColor = styles.input.borderColor;
               e.target.style.boxShadow = 'none';
             }}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={jobTitle}
+            onChange={(e) => setJobTitle(e.target.value)}
+          />
+          
+          {/* Insurance Type Dropdown */}
+          <div className="relative">
+            <select
+              id="insuranceType"
+              name="insuranceType"
+              required
+              className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none appearance-none"
+              style={styles.select}
+              onFocus={(e) => {
+                e.target.style.borderColor = styles.selectFocus.borderColor;
+                e.target.style.boxShadow = styles.selectFocus.boxShadow;
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = styles.select.borderColor;
+                e.target.style.boxShadow = 'none';
+              }}
+              value={insuranceType}
+              onChange={(e) => setInsuranceType(e.target.value)}
+            >
+              <option value="" disabled>Select Insurance Type</option>
+              <option value="Life">Life</option>
+              <option value="Nonlife">Nonlife</option>
+              <option value="Pre-Need">Pre-Need</option>
+              <option value="Micro">Micro</option>
+              <option value="HMO">HMO</option>
+              <option value="Reinsurance">Reinsurance</option>
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+              <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </div>
+          </div>
+          
+          {/* Employee Count */}
+          <input
+            id="employeeCount"
+            placeholder="Employee Count"
+            name="employeeCount"
+            type="number"
+            className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none"
+            style={styles.input}
+            onFocus={(e) => {
+              e.target.style.borderColor = styles.inputFocus.borderColor;
+              e.target.style.boxShadow = styles.inputFocus.boxShadow;
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = styles.input.borderColor;
+              e.target.style.boxShadow = 'none';
+            }}
+            value={employeeCount}
+            onChange={(e) => setEmployeeCount(e.target.value)}
+          />
+          
+          {/* Annual Revenue */}
+          <input
+            id="annualRevenue"
+            placeholder="Annual Revenue"
+            name="annualRevenue"
+            type="number"
+            className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none"
+            style={styles.input}
+            onFocus={(e) => {
+              e.target.style.borderColor = styles.inputFocus.borderColor;
+              e.target.style.boxShadow = styles.inputFocus.boxShadow;
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = styles.input.borderColor;
+              e.target.style.boxShadow = 'none';
+            }}
+            value={annualRevenue}
+            onChange={(e) => setAnnualRevenue(e.target.value)}
+          />
+          
+          {/* Ownership Type */}
+          <input
+            id="ownershipType"
+            placeholder="Ownership Type"
+            name="ownershipType"
+            type="text"
+            className="block w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none"
+            style={styles.input}
+            onFocus={(e) => {
+              e.target.style.borderColor = styles.inputFocus.borderColor;
+              e.target.style.boxShadow = styles.inputFocus.boxShadow;
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = styles.input.borderColor;
+              e.target.style.boxShadow = 'none';
+            }}
+            value={ownershipType}
+            onChange={(e) => setOwnershipType(e.target.value)}
           />
         </div>
         
