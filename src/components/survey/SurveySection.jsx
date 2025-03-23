@@ -174,7 +174,7 @@ export default function SurveySection({
       </div> 
 
       {/* Scrollable container for questions */}
-      <div className="max-h-[400px] overflow-y-auto space-y-4">
+      <div className="max-h-7xl overflow-y-auto space-y-4">
         {/* Questions table - desktop view */}
         <div className="hidden md:block">
           <table className="w-full">

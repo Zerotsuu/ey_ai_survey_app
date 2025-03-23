@@ -76,11 +76,11 @@ export default function SurveyPage() {
         />
         
         {/* Main content area with survey form */}
-        <main className="flex-1 overflow-y-auto pt-16">
+        <main className="flex w-full flex-1 overflow-y-auto pt-16">
           {/* Main form with sections and questions */}
           <form 
             id="survey-form" 
-            className="mx-auto px-4 py-6 md:px-8 md:py-10 max-w-5xl"
+            className="mx-auto px-4 py-6 md:px-8 md:py-10 max-w-7xl"
             onSubmit={handleSubmit}
           >
             {/* Display current section questions */}
